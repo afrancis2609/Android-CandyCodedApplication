@@ -1,20 +1,19 @@
 package com.pluralsight.candycoded;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.pluralsight.candycoded.DB.CandyContract.CandyEntry;
+import com.pluralsight.candycoded.DB.CandyContract;
 import com.pluralsight.candycoded.DB.CandyCursorAdapter;
 import com.pluralsight.candycoded.DB.CandyDbHelper;
 import com.google.gson.Gson;
@@ -23,7 +22,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
-
 
 public class MainActivity extends AppCompatActivity {
   private Candy[] candies;
@@ -73,76 +71,54 @@ public class MainActivity extends AppCompatActivity {
           }
         });
   }
-  
-  // ***
-  // TODO - Task 1 - Show Store Information Activity
-  // ***
-  
-  // *** 1. Override onOptionsITemItemSelected(MenuItem Item) in MainActivity
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-	Intent infoIntent = new Intent(this, InfoActivity.class);
-	startActivity(infoIntent);
-	return super.onOptionsItemSelected(item);
-	}
  
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
+  public boolean onCreateOptionsMenu(Android.view.MenuItem item) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main, menu);
     return true;
   }
+
   // ***
   // TODO - Task 1 - Show Store Information Activity
   // ***
   
-  // *** 1. Override onOptionsITemItemSelected(MenuItem Item) in MainActivity
   @Override
-  public boolean onOptionsITemItemSelected(MenuItem item) {
-      if (item.getItemId() == R.id,menu_refresh) {
+  public boolean onOptionsItemSelected(Android.view.MenuItem item) {
+      if (item.getItemId() == R.id(menu_refresh));
           menuRefreshSelectedFromAnnotatedClass =true;
-    }
-	// ***
-	// TODO - Task 1 - Show Store Information Activity
-	// ***
-	
-	// *** 2. Return a Call to the Super Class Method
     return super.onOptionsItemSelected(item);
   }
 
-	// *** 3. Create the Intent for Launching the InfoActivity
+  @Override
+  public boolean onOptionsItemSelected(Android.view.MenuItem item) {
+      switch (item.getItemId()) {
+          case R.id.settings:
+              startActivity(new Intent(this, EditPreferences.class));
+              return (true);
+      }
+  return(super.onOptionsItemSelected(item));
+  }
 
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                startActivity(new Intent(this, EditPreferences.class));
-                ret        }
-        return(super.onOptionsItemSelected(item));
-    }
-	// ***
-
-	// ***
-	// TODO - 4 - Use start(Activity() to Launch the InforActivity
-	// ***
-  
-	@Override public boolean onOptionsItemSelected(MenuItem item) {
-		Intent infoIntent = new Intent(this, InfoActivity.class);
+  @Override
+  public boolean onOptionsItemSelected(Android.view.MenuItem item) {
+	  Intent infoIntent = new Intent(this, InfoActivity.class);
 		startActivity(infoIntent);
-		return super.onOptionsItemSelected(item);
+  return super.onOptionsItemSelected(item);
 	}
-	// ***
+
+// ***
 	
   private void addCandiesToDatabase(Candy[] candies) {
-    SQLiteDatabase db = candyDbHelper.getWritableDatabase();
+     SQLiteDatabase db = candyDbHelper.getWritableDatabase();
 
-    for (Candy candy : candies) {
-      ContentValues values = new ContentValues();
-      values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
-	  values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
-	  values.put(CandyEntry.COLUMN_NAME_DESC, candy.description);
-	  values.put(CandyEntry.COLUMN_NAME_IMAGE, candy.image);
-      db.insert(CandyContract.CandyEntry.TABLE_NAME, null, values);
+     for (Candy candy : candies) {
+       ContentValues values = new ContentValues();
+       values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
+	   values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
+	   values.put(CandyEntry.COLUMN_NAME_DESC, candy.description);
+	   values.put(CandyEntry.COLUMN_NAME_IMAGE, candy.image);
+       db.insert(CandyContract.CandyEntry.TABLE_NAME, null, values);
     }
   }
 }
