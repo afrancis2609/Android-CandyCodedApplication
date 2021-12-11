@@ -1,15 +1,28 @@
 package com.pluralsight.candycoded;
 
-import android.content.*;
-import android.database.*;
-import android.database.sqlite.*;
-import android.os.*;
-import android.view.*;
-import android.widget.*;
-import com.google.gson.*;
-import com.loopj.android.http.*;
-import com.pluralsight.candycoded.DB.*;
-import cz.msebera.android.httpclient.*;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.pluralsight.candycoded.DB.CandyContract;
+import com.pluralsight.candycoded.DB.CandyCursorAdapter;
+import com.pluralsight.candycoded.DB.CandyDbHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
+
 
 public class MainActivity extends AppCompatActivity {
   private Candy[] candies;
@@ -66,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     inflater.inflate(R.menu.main, menu);
     return true;
   }
+
   // ***
   // TODO - Task 1 - Show Store Information Activity
   // ***
