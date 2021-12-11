@@ -66,8 +66,23 @@ public class DetailActivity extends AppCompatActivity {
         inflater.inflate(R.menu.detail, menu);
         return true;
     }
-
+	
     // ***
     // TODO - Task 4 - Share the Current Candy with an Intent
     // ***
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        createShareIntent();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String shareString = SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED;
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareString);
+        startActivity(shareIntent);
+    }
 }
