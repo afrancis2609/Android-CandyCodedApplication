@@ -1,28 +1,15 @@
 package com.pluralsight.candycoded;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
-import com.pluralsight.candycoded.DB.CandyContract;
-import com.pluralsight.candycoded.DB.CandyCursorAdapter;
-import com.pluralsight.candycoded.DB.CandyDbHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.TextHttpResponseHandler;
-
-import cz.msebera.android.httpclient.Header;
-
+import android.content.*;
+import android.database.*;
+import android.database.sqlite.*;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
+import com.google.gson.*;
+import com.loopj.android.http.*;
+import com.pluralsight.candycoded.DB.*;
+import cz.msebera.android.httpclient.*;
 
 public class MainActivity extends AppCompatActivity {
   private Candy[] candies;
@@ -72,38 +59,54 @@ public class MainActivity extends AppCompatActivity {
           }
         });
   }
+ 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.main, menu);
+    return true;
+  }
+  // ***
+  // TODO - Task 1 - Show Store Information Activity
+  // ***
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+      if (item.getItemId() == R.id(menu_refresh));
+          menuRefreshSelectedFromAnnotatedClass =true;
 
-     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+          case R.id.settings:
+              startActivity(new Intent(this, EditPreferences.class));
+              return (true);
+      }
+  return(super.onOptionsItemSelected(item));
+
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+	  Intent infoIntent = new Intent(this, InfoActivity.class);
+		startActivity(infoIntent);
+  return super.onOptionsItemSelected(item);
+	}
+	// ***
+	
+  private void addCandiesToDatabase(Candy[] candies) {
+     SQLiteDatabase db = candyDbHelper.getWritableDatabase();
+
+     for (Candy candy : candies) {
+       ContentValues values = new ContentValues();
+       values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
+	   values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
+	   values.put(CandyEntry.COLUMN_NAME_DESC, candy.description);
+	   values.put(CandyEntry.COLUMN_NAME_IMAGE, candy.image);
+       db.insert(CandyContract.CandyEntry.TABLE_NAME, null, values);
     }
-    // ***
-    // TODO - Task 1 - Show Store Information Activity
-    // ***
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent infoIntent = new Intent(this, InfoActivity.class);
-        startActivity(infoIntent);
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    private void addCandiesToDatabase(Candy[] candies) {
-        SQLiteDatabase db = candyDbHelper.getWritableDatabase();
-
-        for (Candy candy : candies) {
-            ContentValues values = new ContentValues();
-            values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
-            values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
-            values.put(CandyEntry.COLUMN_NAME_DESC, candy.description);
-            values.put(CandyEntry.COLUMN_NAME_IMAGE, candy.image);
-
-            db.insert(CandyEntry.TABLE_NAME, null, values);
-        }
-    }
+  }
 }
-
