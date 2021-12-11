@@ -9,9 +9,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-
 public class InfoActivity extends AppCompatActivity {
-	
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,22 +21,21 @@ public class InfoActivity extends AppCompatActivity {
         Picasso.with(this).
                 load(uri).
                 into(candyStoreImageView);
-
     }
 
     // ***
     // TODO - Task 2 - Launch the Google Maps Activity
     // ***
-
-    public void createMapIntent(View view){
-        Uri uri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+	
+    public void createMapIntent(View view) {
+        Uri mapUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
         mapIntent.setPackage("com.google.android.apps.maps");
+
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(mapIntent);
         }
     }
-
     // ***
     // TODO - Task 3 - Launch the Phone Activity
     // ***
