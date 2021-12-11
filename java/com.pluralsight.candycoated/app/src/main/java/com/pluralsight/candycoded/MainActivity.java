@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
   }
  
   @Override
-  public boolean onCreateOptionsMenu(Android.view.MenuItem item) {
+  public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main, menu);
     return true;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onOptionsItemSelected(Android.view.MenuItem item) {
+  public boolean onOptionsItemSelected(Menu menu) {
       switch (item.getItemId()) {
           case R.id.settings:
               startActivity(new Intent(this, EditPreferences.class));
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onOptionsItemSelected(Android.view.MenuItem item) {
+  public boolean onOptionsItemSelected(Menu menu) {
 	  Intent infoIntent = new Intent(this, InfoActivity.class);
 		startActivity(infoIntent);
   return super.onOptionsItemSelected(item);
