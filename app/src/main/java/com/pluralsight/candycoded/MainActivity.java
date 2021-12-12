@@ -75,28 +75,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    public class MainActivity extends Activity (
+        @Override public boolean onOptionsItemSelected(MenuItem item) {
+            Intent infoIntent = new Intent(this, InfoActivity.class);
+            startActivity(infoIntent);
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        Intent infoIntent = new Intent(this, InfoActivity.class);
-        startActivity(infoIntent);
+            return super.onOptionsItemSelected(item);
+        }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
-    // ***
-    // TODO - Task 1 - Show Store Information Activity
-    // ***
-
+        @Override public boolean onCreateOptionsMenu(Menu menu) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.main, menu);
+            return true;
+        }
+        // ***
+        // TODO - Task 1 - Show Store Information Activity
+        // ***
+        
+        @OVerride
+        Public boolean onOptionsItemSelected(MenuItem item) {
+            Intent inforIntent = new Intent(this, InfoActivity.class
+            startActivity(infoIntent);
+                                            
+            return supter.onOptionsItemSelected(item)
+        }
+    }                                           
     private void addCandiesToDatabase(Candy[] candies) {
-        SQLiteDatabase db = candyDbHelper.getWritableDatabase();
+    SQLiteDatabase db = candyDbHelper.getWritableDatabase();
 
-        for (Candy candy : candies) {
+    for (Candy candy : candies) {
             ContentValues values = new ContentValues();
             values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
             values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
