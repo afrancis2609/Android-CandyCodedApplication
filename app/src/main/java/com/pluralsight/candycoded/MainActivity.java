@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.app.Activity
 
 import com.pluralsight.candycoded.DB.CandyContract;
 import com.pluralsight.candycoded.DB.CandyCursorAdapter;
 import com.pluralsight.candycoded.DB.CandyDbHelper;
+import com.pluralsight.candycoded.MainActivity
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             //adapter.changeCursor(cursor);
           }
         });
+<<<<<<< Updated upstream
   }
 
   @Override
@@ -96,4 +99,70 @@ public class MainActivity extends AppCompatActivity {
       db.insert(CandyContract.CandyEntry.TABLE_NAME, null, values);
     }
   }
+=======
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://vast-brushlands-23089.herokuapp.com/main/api",
+                new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+                        Log.e("AsyncHttpClient", "response = " + response);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String response) {
+                        Log.d("AsyncHttpClient", "response = " + response);
+                        Gson gson = new GsonBuilder().create();;
+                        candies = gson.fromJson(response, Candy[].class);
+
+                        addCandiesToDatabase(candies);
+
+                        SQLiteDatabase db = candyDbHelper.getWritableDatabase();
+                        Cursor cursor = db.rawQuery("SELECT * FROM candy", null);
+                        //adapter.changeCursor(cursor);
+                    }
+                });
+    }
+	public class MainActivity extends Activity {
+	
+		@Override public boolean onOptionsItemSelected(MenuItem item) {
+			Intent infoIntent = new Intent(this, InfoActivity.class);
+			startActivity(infoIntent);
+
+			return super.onOptionsItemSelected(item);
+		}
+
+		@Override
+			public boolean onCreateOptionsMenu(Menu menu) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.main, menu);
+			return true;
+		}
+	
+    // ***
+    // TODO - Task 1 - Show Store Information Activity
+    // ***
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			Intent infoIntent = new Intent(this, InfoActivity.class);
+			startActivity(infoIntent);
+
+			return super.onOptionsItemSelected(item);
+		}
+	}
+    private void addCandiesToDatabase(Candy[] candies) {
+        SQLiteDatabase db = candyDbHelper.getWritableDatabase();
+
+        for (Candy candy : candies) {
+            ContentValues values = new ContentValues();
+            values.put(CandyEntry.COLUMN_NAME_NAME, candy.name);
+            values.put(CandyEntry.COLUMN_NAME_PRICE, candy.price);
+            values.put(CandyEntry.COLUMN_NAME_DESC, candy.description);
+            values.put(CandyEntry.COLUMN_NAME_IMAGE, candy.image);
+
+            db.insert(CandyEntry.TABLE_NAME, null, values);
+        }
+	}
+>>>>>>> Stashed changes
 }
