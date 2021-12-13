@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
+public class MainActivity extends Activity (
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
